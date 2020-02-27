@@ -228,7 +228,7 @@ function create_slide_menu() {
             bottom: "1%"
         })
         .attr('id', 'input')
-        .attr('placeholder', 'osanumero tai koordinaatit 123 456')
+        .attr('placeholder', 'osanumero tai koord. esim. 123 456')
         .appendTo(div)
         .change(function() {
             //console.log(inputField.val()); // Check input( $( this ).val() ) for validity here

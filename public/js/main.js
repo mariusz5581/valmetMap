@@ -56,7 +56,7 @@ function checkInputData(val) {
                 switch (pair[0]) {
                     case 'nr':
                         if (pair[1].includes(val)) {
-                            markPlace(data[1].split(':')[1], data[2].split(':')[1])
+                            markPlace(data[1].split(':')[1], data[2].split(':')[1], pair[1])
                         }
                         break;
                 }
@@ -65,7 +65,7 @@ function checkInputData(val) {
     }
 }
 
-function markPlace(xCoord, yCoord) {
+function markPlace(xCoord, yCoord, partNumber) {
     var xPercent = 100 - ((xMaximum - xCoord) / xConverter);
     var yPercent = 100 - ((yMaximum - yCoord) / yConverter);
     console.log('coords x:' + xCoord + ' y:' + yCoord);
@@ -76,7 +76,22 @@ function markPlace(xCoord, yCoord) {
     var div = $("<div></div>")
         .css({
             //color: get("font"),
-            overflow: "auto",
+            position: "absolute",
+            display: 'block',
+            "background-color": col_grey180_02,
+            'border-radius': '10px',
+            height: "100px",
+            width: "300px",
+            left: xPercent + '%',
+            bottom: yPercent + '%'
+        })
+        .attr("class", "mark")
+        .appendTo(viewMain);
+
+
+    var blip = $("<div></div>")
+        .css({
+            //color: get("font"),
             position: "absolute",
             display: "inline-flex",
             opacity: 0.4,
@@ -84,13 +99,34 @@ function markPlace(xCoord, yCoord) {
             'border-radius': '50px',
             height: "20px",
             width: "20px",
-            left: xPercent + '%',
-            bottom: yPercent + '%'
+            left: '40px',
+            bottom: '40px'
+
         })
-        .attr("class", "mark")
-        .appendTo(viewMain);
+        .appendTo(div);
+
+    if (partNumber) {
+
+        var partNr = $("<div></div>")
+            .css({
+                //color: get("font"),
+                position: "absolute",
+                display: "inline-flex",
+                "background-color": col_grey180_05,
+                'color': col_white,
+                'border-radius': '10px',
+                height: "20px",
+                width: "20px",
+                left: '0px',
+                bottom: '40px'
+
+            })
+            .text(partNumber)
+            .appendTo(div);
+    }
+
     int[intCount] = setInterval(() => {
-        div.animate({
+        blip.animate({
             opacity: "+=0.5",
             width: "+=30",
             height: "+=30",
@@ -98,7 +134,7 @@ function markPlace(xCoord, yCoord) {
             bottom: "-=15"
         }, 900);
         setTimeout(() => {
-            div.animate({
+            blip.animate({
                 opacity: "-=0.5",
                 width: "-=30",
                 height: "-=30",
