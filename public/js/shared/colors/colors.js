@@ -1,10 +1,12 @@
 var theme = 'dark';
 
 var col_black = 'rgb(0,0,0)';
+var col_black05 = 'rgb(0,0,0,0.82)';
 var col_btn_bg = 'rgb(0,0,150,0.6)';
 var col_btn_hover = 'rgb(0,0,150,0.9)';
 var col_grey40 = 'rgb(40, 40, 40)';
 var col_grey60_05 = 'rgb(60, 60, 60, 0.5)';
+var col_grey160_04 = 'rgb(160, 160, 160, 0.4)';
 var col_grey80 = 'rgb(80, 80, 80)';
 var col_grey120 = 'rgb(120, 120, 120)';
 var col_grey150 = 'rgb(150, 150, 150)';
@@ -63,7 +65,9 @@ function themeDark(element) {
         case 'y_line':
             return 'black';
         case 'bg_menu':
-            return col_grey60_05;
+            return col_grey160_04;
+            case 'bg_menu2':
+            return col_black05;
         case 'mark':
             return 'transparent';
         case 'btn_border2':

@@ -6,7 +6,7 @@ var xDiff = 0;
 var yDiff = 0;
 var xMaximum = 0;
 var yMaximum = 0;
-var a_hitsaamo_map;
+var map;
 
 function create_valmet_map() {
 
@@ -37,7 +37,7 @@ function create_valmet_map() {
     return div;
 }
 
-function create_coordinates(xMin, xMax, yMin, yMax, xStep, yStep) {
+function create_coordinates(xMin, xMax, yMin, yMax, xStep, yStep, appendTo) {
     var x = [];
     var xNumber = [];
     var xCount = 0;
@@ -59,23 +59,23 @@ function create_coordinates(xMin, xMax, yMin, yMax, xStep, yStep) {
                 "background-color": get("x_line"),
                 //height: "1px",
                 width: "10%",
-                left: ix * 100 / yStep + "%",
+                left: ix * 100 / xStep + "%",
                 top: "0px"
             })
             .attr("class", "coord")
-            .appendTo(a_hitsaamo_map);
+            .appendTo(appendTo);
 
         xNumber[xCount] = $("<div></div>")
             .css({
                 //color: get("font"),
                 position: "absolute",
-                "color": get("x_line"),
-                "background-color": "white",
+                "color": col_white,
+                "background-color": col_white02,
                 'border-radius': '10px',
                 padding: "5px",
                 //height: "10px",
                 //width: "30px",
-                left: "",
+                //left: "",
                 top: "5px"
             }).text(Math.floor(xMin + (ix * xCoordStep)))
             .appendTo(x[xCount]);
@@ -105,16 +105,16 @@ function create_coordinates(xMin, xMax, yMin, yMax, xStep, yStep) {
             })
             .attr("class", "coord")
             .css({
-                top: '-=6%'
+                top:"-=3%"
             })
-            .appendTo(a_hitsaamo_map);
+            .appendTo(appendTo);
 
         yNumber[yCount] = $("<div></div>")
             .css({
                 //color: get("font"),
                 position: "absolute",
-                "color": get("y_line"),
-                "background-color": "white",
+                "color": col_white,
+                "background-color": col_white02,
                 'border-radius': '10px',
                 padding: "5px",
 
@@ -128,8 +128,8 @@ function create_coordinates(xMin, xMax, yMin, yMax, xStep, yStep) {
     }
 }
 
-function create_a_hitsaamo() {
-    a_hitsaamo_map = $("<div></div>")
+function create_map() {
+    map = $("<div></div>")
         .css({
             position: "absolute",
             cursor: "cross",
@@ -149,7 +149,61 @@ function create_a_hitsaamo() {
         })
         .attr("src", img_a_hitsaamo)
         .attr("id", "image")
-        .appendTo(a_hitsaamo_map);
+        .appendTo(map);
+}
+
+class Maps{
+    constructor(){
+        this.mapDiv;
+        this.imgMap;
+        this.xMin;
+        this.xMax;
+        this.yMin;
+        this.yMax;
+        this.xStep;
+        this.yStep;
+    }
+}
+
+var mapData = [];
+mapData[0] = new Maps();
+mapData[0].imgMap = img_map;
+mapData[0].xMin = 10;
+mapData[0].xMax = 1000;
+mapData[0].yMin = 10;
+mapData[0].yMax = 500;
+mapData[0].xStep = 8;
+mapData[0].yStep = 6;
+
+
+
+function create_maps() {
+    for(var i = 0;i< mapData.length;i++){
+        mapData[i].mapDiv = $("<div></div>")
+        .css({
+            position: "absolute",
+            cursor: "cross",
+            width: "100%",
+        })
+        .appendTo(viewMain);
+
+        $("<img></img>")
+        .css({
+            //position: "absolute",
+            cursor: "cross",
+            width: "100%",
+            //height: '100%'
+            //"border-radius": "10px"
+        })
+        .attr("src", mapData[i].imgMap)
+        .attr("id", "image")
+        .appendTo(mapData[i].mapDiv);
+
+        currentMap = mapData[i].mapDiv;
+        create_coordinates(mapData[i].xMin, mapData[i].xMax,mapData[i].yMin, mapData[i].yMax,mapData[i].xStep, mapData[i].yStep, mapData[i].mapDiv);
+    }
+
+    
 }
 
 function create_slide_menu() {
@@ -160,7 +214,7 @@ function create_slide_menu() {
             display: "inline-flex",
             "background-color": 'transparent',
             "border-radius": '20px',
-            height: "12%",
+            height: "8%",
             width: "98%",
             right: "1%",
             top: "0%"
@@ -172,13 +226,13 @@ function create_slide_menu() {
             //color: get("font"),
             position: "absolute",
             //display: "inline-flex",
-            "border-radius": '40px',
+            "border-radius": '40%',
             "border-top-left-radius": '0px',
             "border-top-right-radius": '0px',
             "border-top-width": '0px',
 
             "background-color": get('bg_menu'),
-            'border-width': '1px',
+            'border-width': '0px',
             'border-style': 'solid',
             'border-color': 'white',
             height: "80%",
@@ -197,7 +251,7 @@ function create_slide_menu() {
                     })
                     .animate({
                         //opacity: 0.25,
-                        top: "-=80",
+                        top: "-=8%",
 
                     }, 500, function() {
                         // Animation complete.
@@ -212,7 +266,7 @@ function create_slide_menu() {
                     })
                     .animate({
                         //opacity: 0.25,
-                        top: "+=80",
+                        top: "+=8%",
 
                     }, 500, function() {
                         // Animation complete.
@@ -237,9 +291,13 @@ function create_slide_menu() {
             'font-size': '1.9em',
             "text-align": "center",
             'color': 'white',
-            "background-color": 'black',
-            "border-radius": '10px',
-            "border-width": '2px',
+            "background-color": get('bg_menu2'),
+            "border-radius": '5%',
+            "border-top-left-radius": '0px',
+            "border-top-right-radius": '0px',
+            "border-bottom-right-radius": '5%',
+            "border-bottom-left-radius": '5%',
+            "border-width": '0px',
             "border-color": 'white',
             height: "95%",
             width: "45%",

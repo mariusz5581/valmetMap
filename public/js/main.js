@@ -4,7 +4,11 @@ var divBlackOnStart;
 var viewLoadingScreen;
 var viewLogin;
 var viewMain;
+
+var currentMap;
+
 var block_a_hitsaamo;
+
 var block_coordinates;
 var int = [];
 var intCount = 0;
@@ -70,6 +74,7 @@ function checkInputData(val) {
 }
 
 function markPlace(xCoord, yCoord, partNumber) {
+    console.log('partNumber:' + partNumber);
     var xPercent = 100 - ((xMaximum - xCoord) / xConverter);
     var yPercent = 100 - ((yMaximum - yCoord) / yConverter);
     console.log('coords x:' + xCoord + ' y:' + yCoord);
@@ -77,6 +82,7 @@ function markPlace(xCoord, yCoord, partNumber) {
     console.log('percents x:' + xPercent + ' y:' + yPercent);
     console.log('converters x:' + xConverter + ' y:' + yConverter);
 
+    if(partNumber){
     var div = $("<div></div>")
         .css({
             //color: get("font"),
@@ -86,12 +92,12 @@ function markPlace(xCoord, yCoord, partNumber) {
             'border-radius': '10px',
             height: "100px",
             width: "300px",
-            left: xPercent + '%',
+            left: xPercent + 1 + '%',
             bottom: yPercent + '%'
         })
         .attr("class", "mark")
-        .appendTo(a_hitsaamo_map);
-
+        .appendTo(currentMap);
+    }
 
     var blip = $("<div></div>")
         .css({
@@ -103,11 +109,13 @@ function markPlace(xCoord, yCoord, partNumber) {
             'border-radius': '50px',
             height: "20px",
             width: "20px",
-            left: '40px',
-            bottom: '40px'
-
+            //left: '40px',
+            //bottom: '40px'
+            left: xPercent + '%',
+            bottom: yPercent + '%'
         })
-        .appendTo(div);
+        .attr("class", "mark")
+        .appendTo(currentMap);
 
     if (partNumber) {
 
@@ -152,8 +160,8 @@ function markPlace(xCoord, yCoord, partNumber) {
 
 function InitializeValmetMapView() {
     viewMain = create_valmet_map().appendTo('#main');
-    create_a_hitsaamo();
-    create_coordinates(436, 644, 348, 416, 10, 10);
+    create_maps();
+    //create_coordinates(436, 644, 348, 416, 10, 10);
     create_slide_menu();
 }
 
