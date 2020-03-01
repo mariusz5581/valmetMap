@@ -55,11 +55,12 @@ function create_coordinates(xMin, xMax, yMin, yMax, xStep, yStep) {
             .css({
                 //color: get("font"),
                 position: "absolute",
+                display: 'block',
                 "background-color": get("x_line"),
-                height: "1px",
-                width: "100%",
-                left: "0px",
-                top: ix * 100 / yStep + "%"
+                //height: "1px",
+                width: "10%",
+                left: ix * 100 / yStep + "%",
+                top: "0px"
             })
             .attr("class", "coord")
             .appendTo(a_hitsaamo_map);
@@ -70,12 +71,13 @@ function create_coordinates(xMin, xMax, yMin, yMax, xStep, yStep) {
                 position: "absolute",
                 "color": get("x_line"),
                 "background-color": "white",
+                'border-radius': '10px',
                 padding: "5px",
-                height: "10px",
-                width: "30px",
-                left: "5px",
-                top: "0px"
-            }).text(xMax - ix * xCoordStep)
+                //height: "10px",
+                //width: "30px",
+                left: "",
+                top: "5px"
+            }).text(Math.floor(xMin + (ix * xCoordStep)))
             .appendTo(x[xCount]);
         xCount++;
     }
@@ -88,17 +90,23 @@ function create_coordinates(xMin, xMax, yMin, yMax, xStep, yStep) {
     yDiff = yMax - yMin; // difference end map minus start map
 
     for (var iy = 1; iy < yStep + 1; iy++) {
+        var nextPoint = iy * 100 / yStep;
+
         y[yCount] = $("<div></div>")
             .css({
                 //color: get("font"),
                 position: "absolute",
-                "background-color": get("y_line"),
-                height: "100%",
-                width: "1px",
-                left: iy * 100 / yStep + "%",
-                top: "0px",
+                //display: 'block',
+                //"background-color": get("y_line"),
+                height: "10%",
+                //width: "1px",
+                left: "0px",
+                top: nextPoint + "%",
             })
             .attr("class", "coord")
+            .css({
+                top: '-=6%'
+            })
             .appendTo(a_hitsaamo_map);
 
         yNumber[yCount] = $("<div></div>")
@@ -107,30 +115,41 @@ function create_coordinates(xMin, xMax, yMin, yMax, xStep, yStep) {
                 position: "absolute",
                 "color": get("y_line"),
                 "background-color": "white",
+                'border-radius': '10px',
                 padding: "5px",
 
-                height: "10px",
-                width: "30px",
-                left: "0px",
-                top: "5px"
-            }).text(yMin + (iy * yCoordStep))
+                //height: "10px",
+                //width: "30px",
+                //left: "5px",
+                top: "0px"
+            }).text(Math.floor(yMax - (iy * yCoordStep)))
             .appendTo(y[yCount]);
         yCount++;
     }
 }
 
 function create_a_hitsaamo() {
-    a_hitsaamo_map = $("<img></img>")
+    a_hitsaamo_map = $("<div></div>")
         .css({
             position: "absolute",
             cursor: "cross",
             width: "100%",
-            height: '100%'
-                //"border-radius": "10px"
+        })
+        .appendTo(viewMain);
+
+
+
+    $("<img></img>")
+        .css({
+            //position: "absolute",
+            cursor: "cross",
+            width: "100%",
+            //height: '100%'
+            //"border-radius": "10px"
         })
         .attr("src", img_a_hitsaamo)
         .attr("id", "image")
-        .appendTo(viewMain);
+        .appendTo(a_hitsaamo_map);
 }
 
 function create_slide_menu() {

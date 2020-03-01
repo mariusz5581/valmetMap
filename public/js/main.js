@@ -36,6 +36,7 @@ function keyboardPress() {
 }
 
 function checkInputData(val) {
+    //#region Clear all marks first
     for (var i = 0; i < intCount; i++) {
         clearInterval(int[i]);
     }
@@ -44,7 +45,9 @@ function checkInputData(val) {
     if (val.length < 4) {
         return;
     }
-
+    //#endregion Clear all marks first
+    //#region Input data recognition
+    //when input data has space and two elements (ex. '435 993')
     if (val.split(' ').length == 2) {
         markPlace(val.split(' ')[0], val.split(' ')[1]);
     } else {
@@ -63,6 +66,7 @@ function checkInputData(val) {
             }
         }
     }
+    //#endregion Input data recognition
 }
 
 function markPlace(xCoord, yCoord, partNumber) {
@@ -86,7 +90,7 @@ function markPlace(xCoord, yCoord, partNumber) {
             bottom: yPercent + '%'
         })
         .attr("class", "mark")
-        .appendTo(viewMain);
+        .appendTo(a_hitsaamo_map);
 
 
     var blip = $("<div></div>")
@@ -149,7 +153,7 @@ function markPlace(xCoord, yCoord, partNumber) {
 function InitializeValmetMapView() {
     viewMain = create_valmet_map().appendTo('#main');
     create_a_hitsaamo();
-    create_coordinates(436, 644, 348, 413, 10, 10);
+    create_coordinates(436, 644, 348, 416, 10, 10);
     create_slide_menu();
 }
 
