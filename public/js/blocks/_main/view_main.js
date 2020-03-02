@@ -25,8 +25,8 @@ function create_valmet_map() {
     var div = $("<div></div>")
         .css({
             //color: get("font"),
-            overflow: "auto",
-            position: "absolute",
+            //overflow: "auto",
+            position: "fixed",
             display: "inline-flex",
             "background-color": get("bg"),
             height: "100%",
