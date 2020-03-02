@@ -29,9 +29,9 @@ function create_valmet_map() {
             position: "fixed",
             display: "inline-flex",
             "background-color": get("bg"),
-            height: "100%",
-            width: "100%",
-            left: "0%",
+            height: "90%",
+            width: "93%",
+            left: "3%",
             top: "0%"
         });
     return div;
