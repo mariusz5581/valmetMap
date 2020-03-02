@@ -44,6 +44,8 @@ function create_coordinates(xMin, xMax, yMin, yMax, xStep, yStep, appendTo) {
     console.log(xMin + '> x >' + xMax);
     console.log(yMin + '> y >' + yMax);
 
+    $('.coord').remove();
+
     xMaximum = xMax;
     yMaximum = yMax;
 
@@ -162,6 +164,8 @@ class Maps{
         this.yMax;
         this.xStep;
         this.yStep;
+        this.onClickChangeTo = [];
+        this.onClickElement = [];
     }
 }
 
@@ -175,16 +179,53 @@ mapData[0].yMax = 500;
 mapData[0].xStep = 8;
 mapData[0].yStep = 6;
 
+mapData[0].onClickChangeTo[0] = 1;
+mapData[0].onClickElement[0] = $('<div></div>')
+.css({
+    'background-color':'transparent',
+    position:'absolute',
+    width:'43%',
+    height:'20%',
+    left:'8%',
+    top:'73%'
+})
+.click(function(e) {
+    e.preventDefault();
+        $('.map').css({
+                //"background-color": get("btn_bg_clicked")
+                //"border-color": get("btn_border1"),
+                //"border-right-color": get("btn_border2"),
+                //"border-left-color": get("btn_border2")
+            })
+            .fadeOut(500);
+
+            currentMap = mapData[mapData[0].onClickChangeTo[0]].mapDiv;
+            currentMap.fadeIn(300);
+            create_coordinates(mapData[mapData[0].onClickChangeTo[0]].xMin, mapData[mapData[0].onClickChangeTo[0]].xMax,mapData[mapData[0].onClickChangeTo[0]].yMin, mapData[mapData[0].onClickChangeTo[0]].yMax,mapData[mapData[0].onClickChangeTo[0]].xStep, mapData[mapData[0].onClickChangeTo[0]].yStep, mapData[mapData[0].onClickChangeTo[0]].mapDiv);
+
+    console.log('TODO: animate change of screens');
+})
+
+mapData[1] = new Maps();
+mapData[1].imgMap = img_map01;
+mapData[1].xMin = 80;
+mapData[1].xMax = 505;
+mapData[1].yMin = 40;
+mapData[1].yMax = 140;
+mapData[1].xStep = 8;
+mapData[1].yStep = 3;
 
 
 function create_maps() {
     for(var i = 0;i< mapData.length;i++){
+        $('.map').fadeOut(0);
         mapData[i].mapDiv = $("<div></div>")
         .css({
             position: "absolute",
             cursor: "cross",
             width: "100%",
         })
+        .attr('class', 'map')
         .appendTo(viewMain);
 
         $("<img></img>")
@@ -199,10 +240,18 @@ function create_maps() {
         .attr("id", "image")
         .appendTo(mapData[i].mapDiv);
 
+        for(var i2 = 0;i2<mapData[i].onClickElement.length;i2++){
+            mapData[i].onClickElement[i2].appendTo(mapData[i].mapDiv);
+        }
+
         currentMap = mapData[i].mapDiv;
         create_coordinates(mapData[i].xMin, mapData[i].xMax,mapData[i].yMin, mapData[i].yMax,mapData[i].xStep, mapData[i].yStep, mapData[i].mapDiv);
     }
 
+    $('.map').fadeOut(0);
+    currentMap = mapData[0].mapDiv;
+    currentMap.fadeIn(0);
+    create_coordinates(mapData[0].xMin, mapData[0].xMax,mapData[0].yMin, mapData[0].yMax,mapData[0].xStep, mapData[0].yStep, mapData[0].mapDiv);
     
 }
 
@@ -221,6 +270,42 @@ function create_slide_menu() {
         })
         .appendTo(viewMain);
 
+        var goToMainMap = $("<div>Main</div>")
+        .css({
+            //color: get("font"),
+            position: "absolute",
+            'font-size': '2em',
+            "text-align": "center",
+            color:col_white,
+            padding:'10px',
+            display: "inline-flex",
+            "background-color": col_black05,
+            "border-radius": '40px',
+            //height: "80%",
+            //width: "10%",
+            left: "46%",
+            top: "10%"
+        })
+        .appendTo(div)
+        .click(function(e) {
+            e.preventDefault();
+            $('.map').css({
+                //"background-color": get("btn_bg_clicked")
+                //"border-color": get("btn_border1"),
+                //"border-right-color": get("btn_border2"),
+                //"border-left-color": get("btn_border2")
+            })
+            .fadeOut(500);
+            currentMap = mapData[0].mapDiv;
+            currentMap.fadeIn(300);
+    create_coordinates(mapData[0].xMin, mapData[0].xMax,mapData[0].yMin, mapData[0].yMax,mapData[0].xStep, mapData[0].yStep, mapData[0].mapDiv);
+            
+        });
+        
+        
+
+        
+
     var handle = $("<div></div>")
         .css({
             //color: get("font"),
@@ -235,10 +320,10 @@ function create_slide_menu() {
             'border-width': '0px',
             'border-style': 'solid',
             'border-color': 'white',
-            height: "80%",
+            height: "100%",
             width: "6%",
             right: "5%",
-            bottom: "-80%"
+            bottom: "-100%"
         })
         .click(function(e) {
             e.preventDefault();
@@ -276,11 +361,8 @@ function create_slide_menu() {
             }
             console.log('TODO: animate slide menu');
         })
-
-    .on("tap", function() {
-            $(this).hide();
-        })
         .appendTo(div);
+        
 
 
     var inputField = $("<input></input>")

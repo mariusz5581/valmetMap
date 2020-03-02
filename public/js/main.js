@@ -39,7 +39,7 @@ function keyboardPress() {
 
 }
 
-function checkInputData(val) {
+function checkInputDataOLD(val) {
     //#region Clear all marks first
     for (var i = 0; i < intCount; i++) {
         clearInterval(int[i]);
@@ -70,7 +70,34 @@ function checkInputData(val) {
             }
         }
     }
+
+    
     //#endregion Input data recognition
+}
+
+function checkInputData(val) {
+    //#region Clear all marks first
+    for (var i = 0; i < intCount; i++) {
+        clearInterval(int[i]);
+    }
+    intCount = 0;
+    $('.mark').remove();
+    if (val.length < 4) {
+        return;
+    }
+    //#endregion Clear all marks first
+    //#region Input data recognition
+    //when input data has space and two elements (ex. '435 993')
+    if (val.split(' ').length == 2) {
+        markPlace(val.split(' ')[0], val.split(' ')[1]);
+    } else {
+        console.log('part number');
+        for (var i = 0; i < parts.length; i++) {
+            if (parts[i].partNr.includes(val)) {
+                markPlace(parts[i].x, parts[i].y,parts[i].partNr + ' x' + parts[i].x + ' y' + parts[i].y);
+            }
+        }
+    }
 }
 
 function markPlace(xCoord, yCoord, partNumber) {
@@ -81,7 +108,25 @@ function markPlace(xCoord, yCoord, partNumber) {
     console.log('maximum x:' + xMaximum + ' maximum y:' + yMaximum);
     console.log('percents x:' + xPercent + ' y:' + yPercent);
     console.log('converters x:' + xConverter + ' y:' + yConverter);
-
+    
+    var blip = $("<div></div>")
+    .css({
+        //color: get("font"),
+        position: "absolute",
+        display: "inline-flex",
+        opacity: 0.4,
+        "background-color": 'red',
+        'border-radius': '20px',
+        height: "20px",
+        width: "20px",
+        //left: '40px',
+        //bottom: '40px'
+        left: xPercent + '%',
+        bottom: yPercent + '%'
+    })
+    .attr("class", "mark")
+    .appendTo(currentMap);
+    
     if(partNumber){
     var div = $("<div></div>")
         .css({
@@ -90,8 +135,8 @@ function markPlace(xCoord, yCoord, partNumber) {
             display: 'block',
             "background-color": col_grey180_02,
             'border-radius': '10px',
-            height: "100px",
-            width: "300px",
+            //height: "100px",
+            //width: "300px",
             left: xPercent + 1 + '%',
             bottom: yPercent + '%'
         })
@@ -99,23 +144,7 @@ function markPlace(xCoord, yCoord, partNumber) {
         .appendTo(currentMap);
     }
 
-    var blip = $("<div></div>")
-        .css({
-            //color: get("font"),
-            position: "absolute",
-            display: "inline-flex",
-            opacity: 0.4,
-            "background-color": 'red',
-            'border-radius': '50px',
-            height: "20px",
-            width: "20px",
-            //left: '40px',
-            //bottom: '40px'
-            left: xPercent + '%',
-            bottom: yPercent + '%'
-        })
-        .attr("class", "mark")
-        .appendTo(currentMap);
+    
 
     if (partNumber) {
 
@@ -127,10 +156,11 @@ function markPlace(xCoord, yCoord, partNumber) {
                 "background-color": col_grey180_05,
                 'color': col_white,
                 'border-radius': '10px',
-                height: "20px",
-                width: "20px",
+                //height: "20px",
+                //width: "20px",
+                padding:'5px',
                 left: '0px',
-                bottom: '40px'
+                bottom: '10px'
 
             })
             .text(partNumber)

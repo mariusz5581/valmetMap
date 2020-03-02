@@ -1,14 +1,45 @@
 class Parts {
     constructor() {
         this.data = 'none';
+        this.x;
+        this.y;
+        this.partSeries = 'z';
+        this.partNr;
+        this.assembly01;
+        this.assembly02;
+        this.assembly03;
+        this.assembly04;
+        this.assembly05;
     }
 }
 
+function getRandomInt(min, max) {
+    var result = Math.floor(Math.random() * Math.floor(max));
+    if(result < min){
+        result = min;
+    }
+    if (result> max){
+        result = max;
+    }
+    return result;
+}
+var partIndex = 100000;
 var parts = [];
-for (var i = 0; i < 50; i++) {
+for (var i = 0; i < 100000; i++) {
     parts[i] = new Parts();
+    var nr = 'Z00' + partIndex;
+    partIndex++;
+    var x= getRandomInt(40,950);
+    var y= getRandomInt(40,470);
+    parts[i].data = 'nr:' + nr + '|x:' + x + '|y:' + y;
+    parts[i].partSeries = 'Z';
+    parts[i].partNr = nr;
+    parts[i].x = x;
+    parts[i].y = y;
 
 }
+console.log(parts);
+/*
 parts[0].data = 'nr:a1776376500|x:615|y:375';
 parts[1].data = 'nr:a1776201100|x:437|y:359';
 parts[2].data = 'nr:a1778810500|x:576|y:400';
@@ -27,3 +58,4 @@ parts[14].data = 'nr:a1776103200|x:504|y:404';
 parts[15].data = 'nr:a1776370100|x:608|y:356';
 parts[16].data = 'nr:a1776307700|x:560|y:364';
 parts[17].data = 'nr:a1776206201|x:437|y:370';
+*/
