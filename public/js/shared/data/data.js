@@ -44,13 +44,13 @@ console.log(parts);*/
 //ALUE 81
 //Korilinja
 parts[0].data = 'nr:a0009874744|x:384|y:336';
-parts[0].data = 'nr:a0009875144|x:384|y:336';
-parts[0].data = 'nr:a0009908411|x:384|y:336';
-parts[0].data = 'nr:a0009912903|x:384|y:336';
-parts[0].data = 'nr:a0009913003|x:384|y:336';
-parts[0].data = 'nr:a0009913203|x:384|y:336';
-parts[0].data = 'nr:a0009914703|x:384|y:336';
-parts[0].data = 'nr:a0009915203|x:384|y:336';
-parts[0].data = 'nr:a00099180411401|x:384|y:336';
-parts[0].data = 'nr:a0019910270|x:384|y:336';
-parts[0].data = 'nr:a2036370998|x:384|y:336';
+parts[1].data = 'nr:a0009875144|x:384|y:336';
+parts[2].data = 'nr:a0009908411|x:384|y:336';
+parts[3].data = 'nr:a0009912903|x:384|y:336';
+parts[4].data = 'nr:a0009913003|x:384|y:336';
+parts[5].data = 'nr:a0009913203|x:384|y:336';
+parts[6].data = 'nr:a0009914703|x:384|y:336';
+parts[7].data = 'nr:a0009915203|x:384|y:336';
+parts[8].data = 'nr:a00099180411401|x:384|y:336';
+parts[9].data = 'nr:a0019910270|x:384|y:336';
+parts[10].data = 'nr:a2036370998|x:384|y:336';
